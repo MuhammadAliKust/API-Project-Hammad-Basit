@@ -50,7 +50,10 @@ class AuthServices {
       headers: {'Authorization': token},
     );
 
+
+
     if (response.statusCode == 200 || response.statusCode == 201) {
+
       return UserModel.fromJson(jsonDecode(response.body));
     } else {
       throw Exception(response.reasonPhrase.toString());
@@ -58,7 +61,7 @@ class AuthServices {
   }
 
   ///Update User Details
-  Future<UserModel> updateUser({
+  Future<bool> updateUser({
     required String token,
     required String name,
   }) async {
@@ -69,7 +72,7 @@ class AuthServices {
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      return UserModel.fromJson(jsonDecode(response.body));
+      return true;
     } else {
       throw Exception(response.reasonPhrase.toString());
     }
