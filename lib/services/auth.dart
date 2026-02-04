@@ -6,6 +6,8 @@ import 'package:api_project/models/user.dart';
 import 'package:http/http.dart' as http;
 
 class AuthServices {
+
+  final String baseUrl = "https://todo-nu-plum-19.vercel.app";
   ///Register User
   Future<RegisterModel> registerUser({
     required String name,
@@ -13,7 +15,7 @@ class AuthServices {
     required String password,
   }) async {
     http.Response response = await http.post(
-      Uri.parse('{{TODO_URL}}/users/register'),
+      Uri.parse('$baseUrl/users/register'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'name': name, 'email': email, 'password': password}),
     );
@@ -31,7 +33,7 @@ class AuthServices {
     required String password,
   }) async {
     http.Response response = await http.post(
-      Uri.parse('{{TODO_URL}}/users/login'),
+      Uri.parse('$baseUrl/users/login'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'email': email, 'password': password}),
     );
@@ -46,7 +48,7 @@ class AuthServices {
   ///Get User Details
   Future<UserModel> getUser(String token) async {
     http.Response response = await http.get(
-      Uri.parse('{{TODO_URL}}/users/profile'),
+      Uri.parse('$baseUrl/users/profile'),
       headers: {'Authorization': token},
     );
 
@@ -66,7 +68,7 @@ class AuthServices {
     required String name,
   }) async {
     http.Response response = await http.put(
-      Uri.parse('{{TODO_URL}}/users/profile'),
+      Uri.parse('$baseUrl/users/profile'),
       headers: {'Authorization': token, 'Content-Type': 'application/json'},
       body: jsonEncode({'name': name}),
     );
