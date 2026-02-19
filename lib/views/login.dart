@@ -1,5 +1,8 @@
+import 'package:api_project/providers/user.dart';
+import 'package:api_project/views/profile.dart';
 import 'package:api_project/views/register.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../services/auth.dart';
 
@@ -16,6 +19,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(title: const Text('Login')),
       body: Column(
@@ -51,9 +55,12 @@ class _LoginViewState extends State<LoginView> {
                         await AuthServices()
                             .getUser(value.token.toString())
                             .then((val) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('Welcome ${val.user!.name}'),
+                              userProvider.setUser(val);
+                              userProvider.setToken(value.token.toString());
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProfileView(),
                                 ),
                               );
                             });
